@@ -1,4 +1,4 @@
-#BCE Empirical finance research program R course materials
+# BCE Empirical finance research program R course materials
 
 *__Máté__ Csaba Sándor 2018*
 
