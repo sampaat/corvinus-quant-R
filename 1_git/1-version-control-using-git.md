@@ -72,7 +72,7 @@ Pushing changes
 - Write something into it
 - ``` git add hello_world.txt ```
 - ``` git commit -m "initiating my first file" ```
-- ``` git push ```
+- ``` git push origin master ```
 - Provide your credentials (advanced users can [set up an ssh key](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/))
 - Check out the contents on GitHub
 
