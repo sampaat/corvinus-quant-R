@@ -1,0 +1,110 @@
+Lesson 2: R simple types and functions
+========================================================
+author: Mate Csaba Sandor
+date: 2018 September
+autosize: true
+
+
+About R
+========================================================
+
+> R is a programming language and free software environment for statistical computing and graphics 
+
+> R is a GNU package The source code for the R software environment is written primarily in C, Fortran, and R. R is freely available under the GNU General Public License, and pre-compiled binary versions are provided for various operating systems.
+
+> *Wikipedia*
+
+
+Interpreter langage
+========================================================
+
+```{r}
+2 + 2
+"Hello world"
+2 < 1
+```
+
+Variables
+========================================================
+
+```{r}
+a <- 2
+b <- 3
+a ^ b
+c <- a ^ b - a == a * b
+c
+```
+
+Mathematical operators
+========================================================
+
+```{r}
+0 + 1 - 2 * 3 / 4
+(2 ^ 3)**.5
+13 %% 4
+17 %/% 5
+```
+
+Logical operators
+========================================================
+
+```{r}
+(5 < 4)
+!(5 <= 5)
+(3 != 4) & FALSE
+(3 != 4) | FALSE
+```
+
+Functions
+========================================================
+
+```{r}
+log10(10)
+isTRUE(TRUE | FALSE)
+paste("apples","oranges","cacti",sep = " & ")
+```
+
+Creating functions
+========================================================
+
+```{r}
+myFirstFunction <- function(name){
+  paste0("Hi ",name,"! Nice to meet you!")
+}
+myFirstFunction("Mate")
+```
+
+Creating better functions
+========================================================
+
+```{r}
+myFirstFunction <- function(name, day = FALSE){
+  if(day){
+    paste0("Hi ",name,"! Nice to meet you!")
+  }else{
+    paste0("Hi ",name,"! Nice to meet you! It's ",format(Sys.Date(),"%A"))
+}}
+myFirstFunction("Mate")
+myFirstFunction(name = "Mate",day = TRUE)
+
+```
+
+Watch out! Functions ARE variables!
+========================================================
+
+```{r}
+a <- function(){"Yo dawg!"}
+a
+a()
+a <- 2
+a
+
+```
+
+
+Exercise time!
+========================================================
+
+1. Write a finction that greets you, but if your name is longer than 10 characters, also says "What a nice name of yours!"
+2. Create a function that solves a second-order equation (in real space)! Look out for input defaults and determinants!
+3. Create both scripts in different files and then upload them to your git repo!
