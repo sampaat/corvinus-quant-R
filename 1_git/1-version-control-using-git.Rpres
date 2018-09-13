@@ -1,6 +1,6 @@
 Lesson 1: Version control using git
 ========================================================
-author: Máté Csaba Sándor
+author: Mate Csaba Sandor
 date: 2018 September
 autosize: true
 
@@ -94,6 +94,15 @@ I want to try something.. let's start a branch!
 - ```git checkout master``` -> this does not have the modifications
 - ```git merge mybranch``` -> now it has them (*when the conflicts have been resolved...*)
 - ```git log``` -> the merge is a separate commit
+
+
+Large files
+========================================================
+
+- Git has been made for text files, so pictures/videos/archives will not be effectively handled by it, but sometimes it would still come in handy
+- To resolve this, the community created [Git LFS](https://help.github.com/articles/configuring-git-large-file-storage/#platform-mac) or large file system
+- LFS helps you so that you can version control your large files beside your code without slowing your process down. Version controlling large files in the standard way takes up huge space in memory and on disk and it is really calculation intensive.
+- After installation you can specify extensions that will be handled by lfs from then on: ```git lfs track "*.jpg"````
 
 I need help!
 ========================================================
