@@ -18,7 +18,7 @@ Version control: sharing is caring
 ========================================================
 
 - It would be nice to share my codes and its history with others
-- It would be nice to let that suggest modifications
+- It would be nice to let them suggest modifications
 
 **How can I do this without sending around emails of zip files and sharing dropbox libraries?**
 
