@@ -1,4 +1,4 @@
-Lesson 2: R simple types and functions
+Lesson 2: R base types and functions
 ========================================================
 author: Mate Csaba Sandor
 date: 2018 September
@@ -61,7 +61,7 @@ Functions
 ```{r}
 log10(10)
 isTRUE(TRUE | FALSE)
-paste("apples","oranges","cacti",sep = " & ")
+paste("apples", "oranges", "cacti",sep = " & ")
 ```
 
 Creating functions
@@ -80,12 +80,12 @@ Creating better functions
 ```{r}
 myFirstFunction <- function(name, day = FALSE){
   if(day){
-    paste0("Hi ",name,"! Nice to meet you!")
+    paste0("Hi ", name, "! Nice to meet you!")
   }else{
-    paste0("Hi ",name,"! Nice to meet you! It's ",format(Sys.Date(),"%A"))
+    paste0("Hi ", name, "! Nice to meet you! It's ", format(Sys.Date(),"%A"))
 }}
 myFirstFunction("Mate")
-myFirstFunction(name = "Mate",day = TRUE)
+myFirstFunction(name = "Mate", day = TRUE)
 
 ```
 
@@ -108,3 +108,227 @@ Exercise time!
 1. Write a finction that greets you, but if your name is longer than 10 characters, also says "What a nice name of yours!"
 2. Create a function that solves a second-order equation (in real space)! Look out for input defaults and determinants!
 3. Create both scripts in different files and then upload them to your git repo!
+
+
+Vectors (1) - Creation
+========================================================
+
+```{r}
+c(1, 2, 3)
+seq(1, 3)
+rep(2, 2, 2)
+```
+
+Vectors (2) - Scalar operators
+========================================================
+
+```{r}
+a <- c(1, 2, 3)
+a * 2
+a + 2
+a ^ 2
+```
+
+Vectors (3) - Addressing
+========================================================
+
+```{r}
+a <- c(1, 2, 3)
+a[2]
+names(a) <- c('a', 'b', 'c')
+a
+a['a']
+```
+
+Matrix (1) - Creation, scalar operators
+========================================================
+
+```{r}
+a <- seq(1, 4)
+m <- matrix(a, nrow = 2)
+m
+diag(2) 
+diag(2) * 2
+```
+
+Matrix (2) - Addressing
+========================================================
+
+```{r}
+m <- matrix(seq(1, 4), nrow = 2)
+m
+m[1,2]
+colnames(m) <- c('a', 'b')
+rownames(m) <- c('c', 'd')
+m
+m['c','a']
+```
+
+Linear algebra
+========================================================
+
+```{r, eval=FALSE}
+a <- c(1, 2)
+b <- c(3, 4)
+a * t(b)
+a %*% t(b)
+```
+
+Linear algebra (1)
+========================================================
+
+```{r}
+a <- c(1, 2)
+b <- c(3, 4)
+a * t(b)
+a %*% t(b)
+```
+
+Linear algebra (2)
+========================================================
+
+```{r, eval=FALSE}
+m <- matrix(seq(1, 4), nrow = 2)
+m %*% diag(2)
+crossprod(m, diag(2))
+m * solve(m)
+```
+
+Linear algebra (2)
+========================================================
+
+```{r}
+m <- matrix(seq(1, 4), nrow = 2)
+m %*% diag(2)
+crossprod(m, diag(2))
+m %*% solve(m)
+```
+
+Exercise time!
+========================================================
+
+ $$
+ \begin{matrix} 
+5x_1 & + & x_2 \\
+6x_1 & + & 2x_2
+\end{matrix}
+ \begin{matrix} 
+= 5\\
+= 7
+\end{matrix}
+ $$
+ 
+ $$
+ \begin{bmatrix} 
+5 & 1\\
+6 & 2
+\end{bmatrix}
+\begin{bmatrix} 
+x_1\\
+x_2
+\end{bmatrix} =
+ \begin{bmatrix} 
+5\\
+7
+\end{bmatrix}
+ $$
+ 
+ $$
+ A x = b
+ $$
+ 
+ $$
+ A^{-1} b = x
+ $$
+ 
+ $$
+ x = ?
+ $$
+ 
+List (1) - Creation
+========================================================
+
+```{r}
+a <- list("apples", "oranges")
+a
+list(TRUE, 0, "saywhat?", rep(1, 3), a)
+```
+
+List (2) - Inspection
+========================================================
+
+```{r}
+a <- list(TRUE, 0, "saywhat?", rep(1, 3), list("apples", "oranges"))
+str(a)
+```
+
+List (3) - Access
+========================================================
+
+```{r}
+a <- list(TRUE, 0, "saywhat?", rep(1, 3), list("apples", "oranges"))
+a[[1]]
+a <- list(logic = TRUE, num = 0, "Text me" = "or call", vec = rep(1, 3), list = list("apples", "oranges"))
+a$logic
+a[["Text me"]]
+```
+
+List (4) - Typical usage
+========================================================
+
+```{r}
+eigen(matrix(seq(1, 4), nrow = 2))
+powers <- function(a){
+  list(square = a ^ 2, root = a ^ .5)
+}
+powers(4)
+```
+
+Loops - for, while
+========================================================
+
+```{r}
+a <- seq(1, 4)
+for(i in a){
+  print(2 * i)
+}
+j <- 1
+while(j <= 4){
+  print(2 * a[j])
+  j <- j + 1
+}
+```
+
+
+Use vectors properly!
+========================================================
+
+```{r}
+a <- seq(1, 4)
+a * 2
+sqrt(a)
+seq(1, 7) + a
+sapply(a, function(x) (x + 1) ^ 2)
+```
+
+Use lists properly!
+========================================================
+
+```{r}
+b <- list(list(name = "Adam",sex = "M"), list(name = "Eve", sex = "F"))
+c <- lapply(b, function(x) if(x$sex == "M"){
+    paste(x$name, "is a man.")
+  }else{
+    paste(x$name, "is a woman.")
+  })
+c
+unlist(c)
+```
+
+Exercise time!
+========================================================
+
+- Write a function that generates an integer of length n (use `runif`).
+- Write a pnohebook of names and randomly generated telephonnumbers with a function.
+- Inputs should be a vector of strings, output should be a list of entries, it should use our first function.
+- Write another function that takes the output of the previous and adds a country code before all numbers

@@ -2,4 +2,4 @@
 
 *__Mate__ Csaba Sandor 2018*
 
-This project contains the presentation and other materials of the course.
+This project contains the presentation and other materials of the course
