@@ -50,6 +50,7 @@ Variables
 ```r
 a <- 2
 b <- 3
+
 a ^ b
 ```
 
@@ -187,7 +188,7 @@ Creating better functions
 
 
 ```r
-myFirstFunction <- function(name, day = FALSE){
+greetMe <- function(name, day = FALSE){
   if(day){
     paste0("Hi ", name, "! Nice to meet you!")
   }else{
@@ -197,7 +198,7 @@ myFirstFunction <- function(name, day = FALSE){
   }
 }
 
-myFirstFunction("Mate")
+greetMe("Mate")
 ```
 
 ```
@@ -205,7 +206,7 @@ myFirstFunction("Mate")
 ```
 
 ```r
-myFirstFunction(name = "Mate", day = TRUE)
+greetMe(name = "Mate", day = TRUE)
 ```
 
 ```
@@ -350,6 +351,7 @@ a[a > 1]
 
 ```r
 names(a) <- c('a', 'b', 'c')
+
 a
 ```
 
@@ -374,6 +376,7 @@ Matrix (1) - Creation, scalar operators
 ```r
 a <- seq(1, 4)
 m <- matrix(a, nrow = 2)
+
 m
 ```
 
@@ -409,6 +412,7 @@ Matrix (2) - Addressing
 
 ```r
 m <- matrix(seq(1, 4), nrow = 2)
+
 m
 ```
 
@@ -429,6 +433,7 @@ m[1,2]
 ```r
 colnames(m) <- c('a', 'b')
 rownames(m) <- c('c', 'd')
+
 m
 ```
 
@@ -453,6 +458,7 @@ Linear algebra
 ```r
 a <- c(1, 2)
 b <- c(3, 4)
+
 a * t(b)
 a %*% t(b)
 ```
@@ -464,6 +470,7 @@ Linear algebra (1)
 ```r
 a <- c(1, 2)
 b <- c(3, 4)
+
 a * t(b)
 ```
 
@@ -488,6 +495,7 @@ Linear algebra (2)
 
 ```r
 m <- matrix(seq(1, 4), nrow = 2)
+
 m %*% diag(2)
 crossprod(m, diag(2))
 m * solve(m)
@@ -499,6 +507,7 @@ Linear algebra (2)
 
 ```r
 m <- matrix(seq(1, 4), nrow = 2)
+
 m %*% diag(2)
 ```
 
@@ -575,6 +584,7 @@ List (1) - Creation
 
 ```r
 a <- list("apples", "oranges")
+
 a
 ```
 
@@ -617,6 +627,7 @@ List (2) - Inspection
 
 ```r
 a <- list(TRUE, 0, "saywhat?", rep(1, 3), list("apples", "oranges"))
+
 str(a)
 ```
 
@@ -637,6 +648,7 @@ List (3) - Access
 
 ```r
 a <- list(TRUE, 0, "saywhat?", rep(1, 3), list("apples", "oranges"))
+
 a[[1]]
 ```
 
@@ -646,6 +658,7 @@ a[[1]]
 
 ```r
 a <- list(logic = TRUE, num = 0, "Text me" = "or call", vec = rep(1, 3), list = list("apples", "oranges"))
+
 a$logic
 ```
 
@@ -684,6 +697,7 @@ $vectors
 powers <- function(a){
   list(square = a ^ 2, root = a ^ .5)
 }
+
 powers(4)
 ```
 
@@ -701,6 +715,7 @@ Loops - for, while
 
 ```r
 a <- seq(1, 4)
+
 for(i in a){
   print(2 * i)
 }
@@ -735,6 +750,7 @@ Use vectors properly!
 
 ```r
 a <- seq(1, 4)
+
 a * 2
 ```
 
@@ -772,11 +788,13 @@ Use lists properly!
 
 ```r
 b <- list(list(name = "Adam",sex = "M"), list(name = "Eve", sex = "F"))
+
 c <- lapply(b, function(x) if(x$sex == "M"){
     paste(x$name, "is a man.")
   }else{
     paste(x$name, "is a woman.")
   })
+
 c
 ```
 
