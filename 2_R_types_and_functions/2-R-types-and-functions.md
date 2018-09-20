@@ -174,6 +174,7 @@ Creating functions
 myFirstFunction <- function(name){
   paste0("Hi ",name,"! Nice to meet you!")
 }
+
 myFirstFunction("Mate")
 ```
 
@@ -190,13 +191,17 @@ myFirstFunction <- function(name, day = FALSE){
   if(day){
     paste0("Hi ", name, "! Nice to meet you!")
   }else{
+    # this is a comment
+    # %A is a date format for spelling out the day of the week
     paste0("Hi ", name, "! Nice to meet you! It's ", format(Sys.Date(),"%A"))
-}}
+  }
+}
+
 myFirstFunction("Mate")
 ```
 
 ```
-[1] "Hi Mate! Nice to meet you! It's Tuesday"
+[1] "Hi Mate! Nice to meet you! It's Thursday"
 ```
 
 ```r
@@ -213,6 +218,7 @@ Watch out! Functions ARE variables!
 
 ```r
 a <- function(){"Yo dawg!"}
+
 a
 ```
 
@@ -230,6 +236,7 @@ a()
 
 ```r
 a <- 2
+
 a
 ```
 
@@ -280,6 +287,7 @@ Vectors (2) - Scalar operators
 
 ```r
 a <- c(1, 2, 3)
+
 a * 2
 ```
 
@@ -303,6 +311,14 @@ a ^ 2
 [1] 1 4 9
 ```
 
+```r
+a >= 2
+```
+
+```
+[1] FALSE  TRUE  TRUE
+```
+
 Vectors (3) - Addressing
 ========================================================
 
@@ -314,6 +330,22 @@ a[2]
 
 ```
 [1] 2
+```
+
+```r
+a[c(TRUE, FALSE, TRUE)]
+```
+
+```
+[1] 1 3
+```
+
+```r
+a[a > 1]
+```
+
+```
+[1] 2 3
 ```
 
 ```r
@@ -771,3 +803,10 @@ Exercise time!
 - Write a pnohebook of names and randomly generated telephonnumbers with a function.
 - Inputs should be a vector of strings, output should be a list of entries, it should use our first function.
 - Write another function that takes the output of the previous and adds a country code before all numbers
+
+Exercises for home
+========================================================
+
+[R-bloggers](https://www.r-bloggers.com/) features R related posts regularly. Worth a follow.
+
+Check out exercise 1-7 [here](https://www.r-bloggers.com/functions-exercises/)
