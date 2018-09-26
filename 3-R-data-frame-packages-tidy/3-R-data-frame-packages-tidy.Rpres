@@ -1,0 +1,317 @@
+Lesson 3: Data frame, packages, intro to tidyverse
+========================================================
+author: Mate Csaba Sandor
+date: 2018 September
+autosize: true
+
+Data frame - Creation
+========================================================
+
+```{r}
+a <- data.frame(name = c("Adam", "Eve"),
+           sex = c("male", "female"))
+a
+typeof(a)
+```
+
+Data frame - Built-ins
+========================================================
+
+```{r}
+mtcars
+```
+
+Data frame - Addressing
+========================================================
+
+```{r}
+mtcars[1,1]
+mtcars$mpg
+mtcars[[1]]
+mtcars$mpg[1]
+```
+
+Data frame - Filtering (!)
+========================================================
+
+```{r}
+mtcars[(mtcars$gear > 3) & (mtcars$cyl < 6),]
+```
+
+Data frame - Functions I
+========================================================
+
+```{r}
+summary(mtcars)
+rbind(mtcars[1:2,],mtcars[5:12,])
+```
+
+Data frame - Functions II
+========================================================
+
+```{r}
+apply(iris[,1:4],2,function(x) mean(x))
+head(apply(mtcars,1,function(x) x[1] * x[6]))
+```
+
+Data frame - Functions III
+========================================================
+
+```{r}
+myModel <- lm(formula = "Sepal.Length ~ Petal.Length", data = iris)
+summary(myModel)
+plot(iris$Petal.Length, iris$Sepal.Length)
+```
+
+Data frame - Functions III cont.
+========================================================
+
+```{r}
+plot(iris$Petal.Length, iris$Sepal.Length)
+abline(lm(formula = "Sepal.Length ~ Petal.Length", data = iris))
+```
+
+Data frame - Factors I
+========================================================
+
+```{r}
+head(iris)
+str(iris)
+levels(iris$Species)
+```
+
+Data frame - Factors II
+========================================================
+
+```{r}
+as.numeric(iris$Species)
+summary(iris)
+    
+```
+
+Data frame - Factors II
+========================================================
+
+```{r}
+str(data.frame(name = c("Adam", "Eve", "Steve"), 
+               sex = c("Male", "Female", "Male")))
+str(data.frame(name = c("Adam", "Eve", "Steve"), 
+               sex = c("Male", "Female", "Male"),
+               stringsAsFactors = FALSE))
+    
+```
+- If you are a type of person who is into factors, try [forcats](https://forcats.tidyverse.org/)
+
+Exercise time!
+========================================================
+
+Filter iris for virginica observations, where petal and sepal length is both above average.
+
+Handy things - browser
+========================================================
+
+- ```browser()``` can stop your code in runtime, and you can access your variables in the terminal
+- heaven for debugging
+```{r}
+testFunction <- function(a, b){
+  aa <- a ^ 2
+  browser()
+  aa + b
+}
+```
+
+Handy things - looking up a function quickly
+========================================================
+
+If you type in ```?head``` it will bring up the manual page of the function ```head```.
+
+Handy things - source
+========================================================
+
+- Write your functions into a file
+- with source(filename) you can make all your functions declared in a different script
+
+Handy things - packages
+========================================================
+
+- Packages are premade function libraries that you can load into R
+- Most of them are publicly available
+- You will use a lot of them
+
+Packages - installing
+========================================================
+
+- from CRAN ```install.packages('devtools')```
+- from gitHub ```devtools::install_github(hadley/tidyr)``` (after installing devtools)
+
+Packages - installing
+========================================================
+- You can load all functions into your workspace
+```{r}
+tibble::tibble()
+library(tibble)
+tibble()
+```
+
+Packages - tidyverse
+========================================================
+
+- A [set of packages](https://www.tidyverse.org/packages/) to make work with datasets easier
+- Unified framework to deal with data tables (which are now called tibbles)
+- Constantly groomed and updated by and active community
+
+Tidyverse - tibbles
+========================================================
+
+```{r}
+tibble(name = c("Adam", "Eve", "Steve"),
+           sex = c("male", "female", "male"))
+as.tibble(iris)
+```
+
+Tidyverse - magrittr
+========================================================
+
+```{r}
+library(magrittr)
+mtcars %>% nrow()
+c("a", "b", "c") %>% {setNames(c(1, 2, 3), .)}
+```
+
+
+Tidyverse - dplyr
+========================================================
+
+```{r}
+library(dplyr)
+iris %>%
+  as.tibble() %>%
+  select(Species, Sepal.Length, Sepal.Width) %>%
+  mutate(Sepal.Volume = Sepal.Width ^ 2 * pi * Sepal.Length) %>%
+  filter(Sepal.Volume > 100) %>%
+  arrange(Sepal.Volume)
+```
+
+Tidyverse - tidyr I
+========================================================
+
+```{r}
+library(tidyr)
+iris %>%
+  as.tibble() %>%
+  group_by(Species) %>%
+  summarise(mean.Sepal.Length = mean(Sepal.Length), 
+            max.Sepal.Width = max(Sepal.Width),
+            n.Petal.Length = n_distinct(Petal.Length)) %>%
+  ungroup() %>%
+  mutate(Species = as.character(Species))
+```
+
+Tidyverse - tidyr II
+========================================================
+
+```{r}
+iris %>%
+  as.tibble() %>% 
+  gather(key = flower_att, value = measurement,
+       Sepal.Length, Sepal.Width, Petal.Length, Petal.Width)
+```
+
+
+The concept of tidy data
+========================================================
+
+- Each variable forms a column.
+
+- Each observation forms a row.
+
+- Each type of observational unit forms a table.
+
+Let's tidy up a messy one!
+========================================================
+
+```{r}
+head(esoph)
+str(esoph)
+```
+
+Look at the factor levels
+========================================================
+
+```{r}
+levels(esoph$agegp)
+levels(esoph$alcgp)
+levels(esoph$tobgp)
+```
+
+Let's format the nasty ones
+========================================================
+```{r}
+library(stringr)
+esoph %>% as.tibble() %>%
+  mutate(agegp = str_remove(agegp,"\\+"), 
+         alcgp = str_remove(alcgp,"\\+") %>% str_remove("g/day"),
+         tobgp = str_remove(tobgp,"\\+") %>% str_remove("g/day"))
+```
+
+Let's segment information
+========================================================
+```{r}
+esoph %>% as.tibble() %>%
+  mutate(agegp = str_remove(agegp,"\\+"), 
+         alcgp = str_remove(alcgp,"\\+") %>% str_remove("g/day"),
+         tobgp = str_remove(tobgp,"\\+") %>% str_remove("g/day")) %>%
+  separate(agegp, c("agegp_min","agegp_max"), extra = "merge") %>%
+  separate(alcgp, c("alcgp_min","alcgp_max"), extra = "merge") %>%
+  separate(tobgp, c("tobgp_min","tobgp_max"), extra = "merge")
+```
+
+We have a model
+========================================================
+
+Cancer probability linearly correlate with (minimum) age; alcohol and tobacco consumption.
+
+Let's form the data to stg useable
+========================================================
+
+```{r}
+esoph %>% as.tibble() %>%
+  mutate(agegp = str_remove(agegp,"\\+"), 
+         alcgp = str_remove(alcgp,"\\+") %>% str_remove("g/day"),
+         tobgp = str_remove(tobgp,"\\+") %>% str_remove("g/day")) %>%
+  separate(agegp, c("agegp_min","agegp_max"), extra = "merge", convert = TRUE) %>%
+  separate(alcgp, c("alcgp_min","alcgp_max"), extra = "merge", convert = TRUE) %>%
+  separate(tobgp, c("tobgp_min","tobgp_max"), extra = "merge", convert = TRUE) %>%
+  mutate(prob = ncases/ncontrols) %>%
+  select(prob, age = agegp_min, alcohol = alcgp_min, tobacco = tobgp_min)
+```
+
+And now the model
+========================================================
+
+```{r}
+m <- esoph %>% as.tibble() %>%
+  mutate(agegp = str_remove(agegp,"\\+"), 
+         alcgp = str_remove(alcgp,"\\+") %>% str_remove("g/day"),
+         tobgp = str_remove(tobgp,"\\+") %>% str_remove("g/day")) %>%
+  separate(agegp, c("agegp_min","agegp_max"), extra = "merge", convert = TRUE) %>%
+  separate(alcgp, c("alcgp_min","alcgp_max"), extra = "merge", convert = TRUE) %>%
+  separate(tobgp, c("tobgp_min","tobgp_max"), extra = "merge", convert = TRUE) %>%
+  mutate(prob = ncases/ncontrols) %>%
+  select(prob, age = agegp_min, alcohol = alcgp_min, tobacco = tobgp_min) %>%
+  {lm("prob ~ age + alcohol + tobacco", .)}
+summary(m)
+```
+
+Exercise time!
+========================================================
+
+Tidy up ```bomregions``` dataset from the library ```DAAG```!
+Is there a correlation between sunspot activity, rain and AVt?
+
+Exercises for home
+========================================================
+
+- Data.table [exercises](https://www.r-bloggers.com/functions-exercises-vol-2/)
+- A long escription about tidy data with a [lot of examples](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html)
+

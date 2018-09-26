@@ -275,11 +275,11 @@ seq(1, 3)
 ```
 
 ```r
-rep(2, 2, 2)
+rep(2, 3)
 ```
 
 ```
-[1] 2 2
+[1] 2 2 2
 ```
 
 Vectors (2) - Scalar operators
