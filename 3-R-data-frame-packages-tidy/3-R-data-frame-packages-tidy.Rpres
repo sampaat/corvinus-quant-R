@@ -4,6 +4,18 @@ author: Mate Csaba Sandor
 date: 2018 September
 autosize: true
 
+Dates and times
+========================================================
+
+```{r}
+"2015-01-01"
+as.Date("2015-01-01")
+Sys.Date() - as.Date("2015-01-01")
+as.POSIXlt(Sys.time(), "GMT")
+as.POSIXlt(1832562988,  origin = "1960-01-01")
+Sys.time() - as.POSIXlt(1832562988,  origin = "1960-01-01")
+```
+
 Data frame - Creation
 ========================================================
 
@@ -31,19 +43,27 @@ mtcars[[1]]
 mtcars$mpg[1]
 ```
 
-Data frame - Filtering (!)
+Data frame - Filtering I
 ========================================================
 
 ```{r}
 mtcars[(mtcars$gear > 3) & (mtcars$cyl < 6),]
 ```
 
+Data frame - Filtering II
+========================================================
+
+```{r}
+subset(mtcars, mtcars$cyl > max(mtcars$gear))
+```
+
 Data frame - Functions I
 ========================================================
 
 ```{r}
-summary(mtcars)
-rbind(mtcars[1:2,],mtcars[5:12,])
+summary(mtcars[,c("mpg","cyl","disp")])
+rbind(mtcars[1:2,],mtcars[5:6,])
+colMeans(mtcars)
 ```
 
 Data frame - Functions II
@@ -100,7 +120,8 @@ str(data.frame(name = c("Adam", "Eve", "Steve"),
                stringsAsFactors = FALSE))
     
 ```
-- If you are a type of person who is into factors, try [forcats](https://forcats.tidyverse.org/)
+
+
 
 Exercise time!
 ========================================================
@@ -217,6 +238,11 @@ iris %>%
        Sepal.Length, Sepal.Width, Petal.Length, Petal.Width)
 ```
 
+Tidyverse - forcats
+========================================================
+
+If you are a type of person who is into factors, try [forcats](https://forcats.tidyverse.org/)
+
 
 The concept of tidy data
 ========================================================
@@ -306,8 +332,22 @@ summary(m)
 Exercise time!
 ========================================================
 
+The ```EuStockMarkets``` dataset  contains daily closing prices of Major European stock indices between 1991 and 1998.
+- Figure out the date column
+- Calculate stock returns.
+- What was the mean annual return of an equally weighted portfolio of these indices?
+
+
+Exercise time!
+========================================================
+
 Tidy up ```bomregions``` dataset from the library ```DAAG```!
+
+
 Is there a correlation between sunspot activity, rain and AVt?
+
+
+
 
 Exercises for home
 ========================================================

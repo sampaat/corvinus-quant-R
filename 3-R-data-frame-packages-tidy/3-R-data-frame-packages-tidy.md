@@ -4,6 +4,58 @@ author: Mate Csaba Sandor
 date: 2018 September
 autosize: true
 
+Dates and times
+========================================================
+
+
+```r
+"2015-01-01"
+```
+
+```
+[1] "2015-01-01"
+```
+
+```r
+as.Date("2015-01-01")
+```
+
+```
+[1] "2015-01-01"
+```
+
+```r
+Sys.Date() - as.Date("2015-01-01")
+```
+
+```
+Time difference of 1365 days
+```
+
+```r
+as.POSIXlt(Sys.time(), "GMT")
+```
+
+```
+[1] "2018-09-27 11:40:20 GMT"
+```
+
+```r
+as.POSIXlt(1832562988,  origin = "1960-01-01")
+```
+
+```
+[1] "2018-01-26 06:16:28 CET"
+```
+
+```r
+Sys.time() - as.POSIXlt(1832562988,  origin = "1960-01-01")
+```
+
+```
+Time difference of 244.2666 days
+```
+
 Data frame - Creation
 ========================================================
 
@@ -112,7 +164,7 @@ mtcars$mpg[1]
 [1] 21
 ```
 
-Data frame - Filtering (!)
+Data frame - Filtering I
 ========================================================
 
 
@@ -134,54 +186,78 @@ Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
 Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 ```
 
+Data frame - Filtering II
+========================================================
+
+
+```r
+subset(mtcars, mtcars$cyl > max(mtcars$gear))
+```
+
+```
+                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+```
+
 Data frame - Functions I
 ========================================================
 
 
 ```r
-summary(mtcars)
+summary(mtcars[,c("mpg","cyl","disp")])
 ```
 
 ```
-      mpg             cyl             disp             hp       
- Min.   :10.40   Min.   :4.000   Min.   : 71.1   Min.   : 52.0  
- 1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8   1st Qu.: 96.5  
- Median :19.20   Median :6.000   Median :196.3   Median :123.0  
- Mean   :20.09   Mean   :6.188   Mean   :230.7   Mean   :146.7  
- 3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0   3rd Qu.:180.0  
- Max.   :33.90   Max.   :8.000   Max.   :472.0   Max.   :335.0  
-      drat             wt             qsec             vs        
- Min.   :2.760   Min.   :1.513   Min.   :14.50   Min.   :0.0000  
- 1st Qu.:3.080   1st Qu.:2.581   1st Qu.:16.89   1st Qu.:0.0000  
- Median :3.695   Median :3.325   Median :17.71   Median :0.0000  
- Mean   :3.597   Mean   :3.217   Mean   :17.85   Mean   :0.4375  
- 3rd Qu.:3.920   3rd Qu.:3.610   3rd Qu.:18.90   3rd Qu.:1.0000  
- Max.   :4.930   Max.   :5.424   Max.   :22.90   Max.   :1.0000  
-       am              gear            carb      
- Min.   :0.0000   Min.   :3.000   Min.   :1.000  
- 1st Qu.:0.0000   1st Qu.:3.000   1st Qu.:2.000  
- Median :0.0000   Median :4.000   Median :2.000  
- Mean   :0.4062   Mean   :3.688   Mean   :2.812  
- 3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:4.000  
- Max.   :1.0000   Max.   :5.000   Max.   :8.000  
+      mpg             cyl             disp      
+ Min.   :10.40   Min.   :4.000   Min.   : 71.1  
+ 1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8  
+ Median :19.20   Median :6.000   Median :196.3  
+ Mean   :20.09   Mean   :6.188   Mean   :230.7  
+ 3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0  
+ Max.   :33.90   Max.   :8.000   Max.   :472.0  
 ```
 
 ```r
-rbind(mtcars[1:2,],mtcars[5:12,])
+rbind(mtcars[1:2,],mtcars[5:6,])
 ```
 
 ```
-                   mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-Valiant           18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-Duster 360        14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-Merc 240D         24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-Merc 230          22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-Merc 280          19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-Merc 280C         17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-Merc 450SE        16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+```
+
+```r
+colMeans(mtcars)
+```
+
+```
+       mpg        cyl       disp         hp       drat         wt 
+ 20.090625   6.187500 230.721875 146.687500   3.596563   3.217250 
+      qsec         vs         am       gear       carb 
+ 17.848750   0.437500   0.406250   3.687500   2.812500 
 ```
 
 Data frame - Functions II
@@ -242,7 +318,7 @@ F-statistic: 468.6 on 1 and 148 DF,  p-value: < 2.2e-16
 plot(iris$Petal.Length, iris$Sepal.Length)
 ```
 
-![plot of chunk unnamed-chunk-7](3-R-data-frame-packages-tidy-figure/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-9](3-R-data-frame-packages-tidy-figure/unnamed-chunk-9-1.png)
 
 Data frame - Functions III cont.
 ========================================================
@@ -253,7 +329,7 @@ plot(iris$Petal.Length, iris$Sepal.Length)
 abline(lm(formula = "Sepal.Length ~ Petal.Length", data = iris))
 ```
 
-![plot of chunk unnamed-chunk-8](3-R-data-frame-packages-tidy-figure/unnamed-chunk-8-1.png)
+![plot of chunk unnamed-chunk-10](3-R-data-frame-packages-tidy-figure/unnamed-chunk-10-1.png)
 
 Data frame - Factors I
 ========================================================
@@ -357,7 +433,8 @@ str(data.frame(name = c("Adam", "Eve", "Steve"),
  $ name: chr  "Adam" "Eve" "Steve"
  $ sex : chr  "Male" "Female" "Male"
 ```
-- If you are a type of person who is into factors, try [forcats](https://forcats.tidyverse.org/)
+
+
 
 Exercise time!
 ========================================================
@@ -576,6 +653,11 @@ iris %>%
 # ... with 590 more rows
 ```
 
+Tidyverse - forcats
+========================================================
+
+If you are a type of person who is into factors, try [forcats](https://forcats.tidyverse.org/)
+
 
 The concept of tidy data
 ========================================================
@@ -785,8 +867,22 @@ F-statistic: 45.51 on 3 and 84 DF,  p-value: < 2.2e-16
 Exercise time!
 ========================================================
 
+The ```EuStockMarkets``` dataset  contains daily closing prices of Major European stock indices between 1991 and 1998.
+- Figure out the date column
+- Calculate stock returns.
+- What was the mean annual return of an equally weighted portfolio of these indices?
+
+
+Exercise time!
+========================================================
+
 Tidy up ```bomregions``` dataset from the library ```DAAG```!
+
+
 Is there a correlation between sunspot activity, rain and AVt?
+
+
+
 
 Exercises for home
 ========================================================
