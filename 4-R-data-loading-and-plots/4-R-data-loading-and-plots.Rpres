@@ -1,0 +1,170 @@
+Lesson 4: R Data loading, plots
+========================================================
+author: Mate Csaba Sandor
+date: 2018 September
+autosize: true
+
+
+Reminder about regular expressions
+========================================================
+
+- Here is a handy app for [learning regexp in general](https://regexone.com/)
+- For R specifics you should check this [cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf)
+
+Data? So basic..
+========================================================
+
+- In a firm we usually have a database where we can perform SQL queries
+- Now we do not have access to such thins unfortunately
+- BUT! Nevertheless, you should learn how to write simple SQL queries 
+- [This](https://www.codecademy.com/learn/learn-sql) is a really good 2 hour course that gives you most of what you need to start
+- To set up database connections in R you should use `odbc` or `jdbc` packages to set up the connection adn `DBI` to send queries. The responses then are a perfect feed for SQL.
+
+Let's trade Bitcoin! Or not. Whatever.
+========================================================
+
+[Here](http://bitcoincharts.com) you can get some sweet exchange datasets, let's download some.
+```{r}
+library(readr)
+read_csv("http://api.bitcoincharts.com/v1/csv/anxhkUSD.csv.gz") 
+```
+Hmm. Interesting.
+
+Figuring out the dataset, make it tidy
+========================================================
+
+```{r}
+library(magrittr)
+readr::read_csv("http://api.bitcoincharts.com/v1/csv/anxhkUSD.csv.gz", col_names = c("date", "volume", "price")) %>%
+  dplyr::mutate(date = as.POSIXct(date, origin="1970-01-01"))
+```
+And so on...
+
+Questions:
+- Which was the most active month?
+- What is the bottom 5th percentile of the price returns? (function to use: `lag`)
+
+Exercise time!
+========================================================
+
+Yahoo Finance is ususally my first go-to if I need some stock or ETF data.
+https://finance.yahoo.com/quote/%5EGSPC/history?p=%5EGSPC
+
+- Download S&P500 full history
+- Donwload Dow Jones full history
+- Join the second to the first while holding on to all records (see `left_join`, `inner_join` and friends)
+
+We can do excels as well!
+========================================================
+Download excel file from [here](http://www.cboe.com/micro/buywrite/monthendpricehistory.xls) or jus google "cboe excel download"
+```{r}
+readxl::read_excel("monthendpricehistory.xls")
+```
+
+Make it nicer...
+========================================================
+Download excel file from [here](http://www.cboe.com/micro/buywrite/monthendpricehistory.xls) or jus google "cboe excel download"
+```{r}
+readxl::read_excel("monthendpricehistory.xls", skip = 4, col_types = c("date",rep("numeric",14))) %>%
+  dplyr::rename(date = "X__1", CLL = `CLL*`, VIX = "VIX\u00ae")
+```
+
+Plotting! The base plots
+========================================================
+
+The basic plot function is the most convinient way.
+```{r}
+plot(iris)
+```
+
+Base plot - with linear models
+========================================================
+
+```{r}
+a <- lm(formula = "Sepal.Length ~ Petal.Length", data = iris)
+plot(iris$Petal.Length, iris$Sepal.Length)
+abline(lm(formula = "Sepal.Length ~ Petal.Length", data = iris))
+abline(h = 6)
+abline(v = 4)
+```
+
+Base plot - density plots
+========================================================
+
+```{r}
+hist(iris$Sepal.Length, xlab = "Sepal length", main = "Boring...", col = "pink")
+```
+
+Base plot - density plots
+========================================================
+
+```{r}
+library(magrittr)
+iris$Sepal.Length %>% density() %>% plot(main = "A bit better.", lwd = 4)
+iris$Sepal.Length %>% quantile() %>% abline(v = ., col = "red", lwd = 2)
+iris$Sepal.Length %>% median() %>% abline(v = ., col = "green", lwd = 8)
+```
+
+ggplot for the win!
+========================================================
+
+```{r}
+library(ggplot2)
+data("midwest", package = "ggplot2")
+
+gg <- ggplot(midwest, aes(x=area, y=poptotal)) + 
+  geom_point(aes(col=state, size=popdensity)) + 
+  geom_smooth(method="loess", se=F) + 
+  xlim(c(0, 0.1)) + 
+  ylim(c(0, 500000)) + 
+  labs(subtitle="Area Vs Population", 
+       y="Population", 
+       x="Area", 
+       title="Scatterplot", 
+       caption = "Source: midwest")
+
+plot(gg)
+```
+
+ggplot for the win!
+========================================================
+
+```{r, echo=FALSE}
+library(ggplot2)
+data("midwest", package = "ggplot2")
+
+gg <- ggplot(midwest, aes(x=area, y=poptotal)) + 
+  geom_point(aes(col=state, size=popdensity)) + 
+  geom_smooth(method="loess", se=F) + 
+  xlim(c(0, 0.1)) + 
+  ylim(c(0, 500000)) + 
+  labs(subtitle="Area Vs Population", 
+       y="Population", 
+       x="Area", 
+       title="Scatterplot", 
+       caption = "Source: midwest")
+
+plot(gg)
+```
+
+zoo and dygraphs
+========================================================
+
+```{r}
+readxl::read_excel("monthendpricehistory.xls", skip = 4, col_types = c("date",rep("numeric",14))) %>% tidyr::drop_na() %>%
+  dplyr::rename(date = "X__1", CLL = `CLL*`, VIX = "VIX\u00ae") %>%
+  {zoo::zoo(dplyr::select(., -date), dplyr::pull(., date))} %>%
+  dygraphs::dygraph(main = "Rolling-window values") %>%
+  dygraphs::dyRangeSelector() %>%
+  dygraphs::dyHighlight(highlightSeriesOpts = list(strokeWidth = 3)) %>%
+  dygraphs::dyLegend(show = "always", hideOnMouseOut = FALSE,width = 370) %>%
+  dygraphs::dyAxis("y", label = "Index return", axisLabelFontSize=15,labelWidth=20, axisLabelWidth=90) %>%
+  dygraphs::dyLegend(labelsDiv="rollcor_legend", labelsSeparateLines= TRUE)
+```
+
+Exercise time!
+========================================================
+
+- Create a ggplot timeseries from S&P500 and DOW, make sure you make the labels meaningful, the plot colorful and include a legend!
+- Create the correlation matrix of the index values in the CBOE dataset (see package `lattice`, use the `viridis` palette)
+- Download all datasets for `ripple` market in the bitcoincharts datasource, clreate a stacket barplot showing the market share for the 3 currencies in 3 consecutive years

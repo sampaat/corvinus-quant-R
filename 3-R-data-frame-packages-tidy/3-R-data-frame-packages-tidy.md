@@ -37,7 +37,7 @@ as.POSIXlt(Sys.time(), "GMT")
 ```
 
 ```
-[1] "2018-09-27 11:40:20 GMT"
+[1] "2018-09-27 17:14:18 GMT"
 ```
 
 ```r
@@ -53,7 +53,7 @@ Sys.time() - as.POSIXlt(1832562988,  origin = "1960-01-01")
 ```
 
 ```
-Time difference of 244.2666 days
+Time difference of 244.4985 days
 ```
 
 Data frame - Creation
