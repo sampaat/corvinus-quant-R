@@ -162,9 +162,59 @@ readxl::read_excel("monthendpricehistory.xls", skip = 4, col_types = c("date",re
   dygraphs::dyLegend(labelsDiv="rollcor_legend", labelsSeparateLines= TRUE)
 ```
 
+Materials, other plot packages
+========================================================
+
+- [This is one of the most comprehensive example list for ggplot2](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
+- [Dygraphs for R](https://rstudio.github.io/dygraphs/)
+- [Lattice is a simple grid-plot package for R](https://www.statmethods.net/advgraphs/trellis.html)
+- [Plotly is an interactive plot package forked to R, it can be combined with ggplot](https://plot.ly/r/)
+
+
+And there are many more
+
 Exercise time!
 ========================================================
 
 - Create a ggplot timeseries from S&P500 and DOW, make sure you make the labels meaningful, the plot colorful and include a legend!
 - Create the correlation matrix of the index values in the CBOE dataset (see package `lattice`, use the `viridis` palette)
 - Download all datasets for `ripple` market in the bitcoincharts datasource, clreate a stacket barplot showing the market share for the 3 currencies in 3 consecutive years
+
+Group project!
+========================================================
+
+- Form 3 groups 
+- Elect a project manager
+- You will be assigned a project from the following slides
+- You should present the results and the code in 3 weeks from now.
+- The presentation should be in Rmarkdown (to be discussed next week), featuring R generated plots.
+- You should work collaboratively on the code, everybody has to have some added value. (E.g. the project manager assigns tasks and reveiws the code, somebody does the research and writes the reveiw, others code separate functions, another deals with the data)
+
+A. Optimal portfolio of 5 stocks
+========================================================
+
+- Select 5 US stocks from separate indicies
+- Examine the covariance structure of daily total returns (without dividends)
+- Calculate the optimal minimum-variance portfolio on a historical sample and observe the out-of-sample performance (at least 5 years)
+- Compare the statistics of the returns of the portfolio and it's constituents in the out-of-sample period
+- See package `PerformanceAnalytics` or just figure out the algebra (it's not that hard)
+
+
+B. ETF replication
+========================================================
+
+- Select 5 US stocks from and index and an ETF that follows that index
+- Examine the covariance structure of daily total returns (without dividends)
+- Replicate the ETF returns using the 5 stocks using constrained linear regression (there can be on intercept, betas should sum to 1)
+- Compare the statistics of the returns of the ETF and its replica on an out-of-sample period
+- See package `restriktor`
+
+
+C. Option pricing
+========================================================
+
+- Select 5 US stocks from separate indicies
+- Create a function that generates price paths for the future based on past performance, use GARCH(1,1) with gaussian prior and resampling
+- Create a functions that calcluates put and call option prices using Black-Sholes formula on the historical data and one that does it using the simulations
+- Compare option prices you have ended up with using the 3 models
+- See package `ugarch`

@@ -29,7 +29,7 @@ Sys.Date() - as.Date("2015-01-01")
 ```
 
 ```
-Time difference of 1365 days
+Time difference of 1372 days
 ```
 
 ```r
@@ -37,7 +37,7 @@ as.POSIXlt(Sys.time(), "GMT")
 ```
 
 ```
-[1] "2018-09-27 17:14:18 GMT"
+[1] "2018-10-04 17:38:19 GMT"
 ```
 
 ```r
@@ -53,7 +53,7 @@ Sys.time() - as.POSIXlt(1832562988,  origin = "1960-01-01")
 ```
 
 ```
-Time difference of 244.4985 days
+Time difference of 251.5152 days
 ```
 
 Data frame - Creation

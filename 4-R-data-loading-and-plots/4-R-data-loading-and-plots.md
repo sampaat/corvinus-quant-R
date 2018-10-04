@@ -94,138 +94,47 @@ We can do excels as well!
 ========================================================
 Download excel file from [here](http://www.cboe.com/micro/buywrite/monthendpricehistory.xls) or jus google "cboe excel download"
 
-```r
-readxl::read_excel("monthendpricehistory.xls")
-```
-
-```
-# A tibble: 417 x 15
-   `SPREADSHEET   ~ X__1  X__2  X__3  X__4  X__5  X__6  X__7  X__8  X__9 
-   <chr>            <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr>
- 1 Sources: Bloomb~ Plea~ This~ Data~ "S&P~ Opti~ Past~ <NA>  Supp~ <NA> 
- 2 <NA>             www.~ <NA>  www.~ www.~ www.~ www.~ www.~ www.~ www.~
- 3 <NA>             Cboe~ S&P ~ "S&P~ Cboe~ Cboe~ Cboe~ "Cbo~ Cboe~ Cboe~
- 4 <NA>             BXMSM SPTR  SPX   PUTSM CLL*  BXYSM "VIX~ VXO   BXMD 
- 5 31593            92.2~ 239.~ 250.~ 89.9~ 100   n/a   n/a   18.3~ 100  
- 6 31624            88.9~ 225.~ 236.~ 88.0~ 95.8~ <NA>  <NA>  19.57 95.5~
- 7 31653            92.7~ 242.~ 252.~ 90.3~ 100.~ (scr~ (scr~ 18.5~ 101.~
- 8 31685            86.9~ 222.~ 231.~ 86.6~ 93.4~ <NA>  <NA>  24.7~ 94.5 
- 9 31716            90.6~ 235.~ 243.~ 89.7~ 97.1~ <NA>  <NA>  19.23 100.~
-10 31744            92.4~ 240.~ 249.~ 91.1~ 99.7~ <NA>  <NA>  18.9~ 103.~
-# ... with 407 more rows, and 5 more variables: X__10 <chr>, X__11 <chr>,
-#   X__12 <chr>, X__13 <chr>, X__14 <chr>
-```
-
-Make it nicer...
-========================================================
-Download excel file from [here](http://www.cboe.com/micro/buywrite/monthendpricehistory.xls) or jus google "cboe excel download"
-
-```r
-readxl::read_excel("monthendpricehistory.xls", skip = 4, col_types = c("date",rep("numeric",14))) %>%
-  dplyr::rename(date = "X__1", CLL = `CLL*`, VIX = "VIX\u00ae")
-```
-
-```
-# A tibble: 413 x 15
-   date                BXMSM  SPTR   SPX PUTSM   CLL BXYSM   VIX   VXO
-   <dttm>              <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
- 1 1986-06-30 00:00:00  92.2  239.  251.  89.9 100      NA    NA  18.3
- 2 1986-07-31 00:00:00  89.0  226.  236.  88.1  95.9    NA    NA  19.6
- 3 1986-08-29 00:00:00  92.8  242.  253.  90.4 101.     NA    NA  18.5
- 4 1986-09-30 00:00:00  86.9  222.  231.  86.6  93.5    NA    NA  24.8
- 5 1986-10-31 00:00:00  90.6  235.  244.  89.8  97.2    NA    NA  19.2
- 6 1986-11-28 00:00:00  92.5  241.  249.  91.2  99.7    NA    NA  19.0
- 7 1986-12-31 00:00:00  92.1  235.  242.  91.7  97.4    NA    NA  18.7
- 8 1987-01-30 00:00:00  96.9  266.  274.  95.2 107.     NA    NA  24.7
- 9 1987-02-27 00:00:00  98.3  277.  284.  96.4 108.     NA    NA  22.8
-10 1987-03-31 00:00:00 100.   285.  292.  98.2 113.     NA    NA  23.0
-# ... with 403 more rows, and 6 more variables: BXMD <dbl>, BFLY <dbl>,
-#   CLLZ <dbl>, CMBO <dbl>, CNDR <dbl>, PPUT <dbl>
-```
-
-Plotting! The base plots
-========================================================
-
-The basic plot function is the most convinient way.
-
-```r
-plot(iris)
-```
-
-![plot of chunk unnamed-chunk-5](4-R-data-loading-and-plots-figure/unnamed-chunk-5-1.png)
-
-Base plot - with linear models
-========================================================
 
 
-```r
-a <- lm(formula = "Sepal.Length ~ Petal.Length", data = iris)
-plot(iris$Petal.Length, iris$Sepal.Length)
-abline(lm(formula = "Sepal.Length ~ Petal.Length", data = iris))
-abline(h = 6)
-abline(v = 4)
-```
-
-![plot of chunk unnamed-chunk-6](4-R-data-loading-and-plots-figure/unnamed-chunk-6-1.png)
-
-Base plot - density plots
-========================================================
 
 
-```r
-hist(iris$Sepal.Length, xlab = "Sepal length", main = "Boring...", col = "pink")
-```
-
-![plot of chunk unnamed-chunk-7](4-R-data-loading-and-plots-figure/unnamed-chunk-7-1.png)
-
-Base plot - density plots
-========================================================
 
 
-```r
-library(magrittr)
-iris$Sepal.Length %>% density() %>% plot(main = "A bit better.", lwd = 4)
-iris$Sepal.Length %>% quantile() %>% abline(v = ., col = "red", lwd = 2)
-iris$Sepal.Length %>% median() %>% abline(v = ., col = "green", lwd = 8)
-```
-
-![plot of chunk unnamed-chunk-8](4-R-data-loading-and-plots-figure/unnamed-chunk-8-1.png)
-
-ggplot for the win!
-========================================================
 
 
-```r
-library(ggplot2)
-data("midwest", package = "ggplot2")
 
-gg <- ggplot(midwest, aes(x=area, y=poptotal)) + 
-  geom_point(aes(col=state, size=popdensity)) + 
-  geom_smooth(method="loess", se=F) + 
-  xlim(c(0, 0.1)) + 
-  ylim(c(0, 500000)) + 
-  labs(subtitle="Area Vs Population", 
-       y="Population", 
-       x="Area", 
-       title="Scatterplot", 
-       caption = "Source: midwest")
 
-plot(gg)
-```
 
-![plot of chunk unnamed-chunk-9](4-R-data-loading-and-plots-figure/unnamed-chunk-9-1.png)
 
-ggplot for the win!
-========================================================
 
-![plot of chunk unnamed-chunk-10](4-R-data-loading-and-plots-figure/unnamed-chunk-10-1.png)
 
-zoo and dygraphs
-========================================================
 
 
 
 
 ```
-Error in file(con, "rb") : cannot open the connection
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_COLLATE failed, using "C" 
+3: Setting LC_TIME failed, using "C" 
+4: Setting LC_MESSAGES failed, using "C" 
+5: Setting LC_MONETARY failed, using "C" 
+
+
+processing file: 4-R-data-loading-and-plots.Rpres
+Parsed with column specification:
+cols(
+  `1376999407` = col_integer(),
+  `100.000000000000` = col_double(),
+  `5.000000000000` = col_double()
+)
+Parsed with column specification:
+cols(
+  date = col_integer(),
+  volume = col_double(),
+  price = col_double()
+)
+Quitting from lines 61-62 (4-R-data-loading-and-plots.Rpres) 
+Error: `path` does not exist: 'monthendpricehistory.xls'
+Execution halted
 ```
