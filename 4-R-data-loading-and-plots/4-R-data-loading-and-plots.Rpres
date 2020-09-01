@@ -112,8 +112,8 @@ ggplot for the win!
 library(ggplot2)
 data("midwest", package = "ggplot2")
 
-gg <- ggplot(midwest, aes(x=area, y=poptotal)) + 
-  geom_point(aes(col=state, size=popdensity)) + 
+gg <- ggplot(midwest, aes(x = area, y = poptotal)) + 
+  geom_point(aes(col = state, size = popdensity)) + 
   geom_smooth(method="loess", se=F) + 
   xlim(c(0, 0.1)) + 
   ylim(c(0, 500000)) + 
