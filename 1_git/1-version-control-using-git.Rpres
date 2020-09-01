@@ -7,8 +7,8 @@ autosize: true
 Version control: why?
 ========================================================
 
-- When you create documents and codes, usually you do not get to produce a perfect version that you do not have to modify anymore
-- The creative process includes a lot of try and error, making mistakes, revising your work now and then
+- When you create documents and codes, usually you do not get to produce a perfect version that you soes not need any further modification
+- The creative process includes a lot of trial and error, making mistakes, revising your work now and then
 - Sometimes you add parts that you did not wanted to or delete some that you wanted to keep
 - You would like to keep backup of your material, preferably in many place
 
@@ -18,7 +18,7 @@ Version control: sharing is caring
 ========================================================
 
 - It would be nice to share my codes and its history with others
-- It would be nice to let that suggest modifications
+- It would be nice to let others to suggest modifications
 
 **How can I do this without sending around emails of zip files and sharing dropbox libraries?**
 
@@ -53,7 +53,7 @@ Remote repositories
 - A place where you can backup your code
 - A place where you can share your code and gather others from
 - You can set up a git server yourself or use a commercial provider (*GitHub, GitLab, BitBucket, etc.*)
-- For this class I have suggested to regirster on **GitHub** (public repos are free)
+- For this class I have suggested to regirster on **GitHub** (public repos are free, you also get some private space)
 
 Creating my first project
 ========================================================
@@ -111,3 +111,37 @@ I need help!
 - Google and StackOverflow is always there to help you
 - If there is no solution to your problem on the internet, you are either a pro or you have not searched just long enough. *(Hint:most probably you are not a pro)*
 
+Task 1
+========================================================
+
+- Go up to github and search for my username: *sampaat*
+- Find the project corvinus-quant-R
+- Clone it to your device and pull it from time to time, to have the most updated version
+
+
+Task 2
+========================================================
+
+- Create a user profile for yourself
+- Initiate a project on your computer
+- Create a helloWorld.R file with the content *"Hello World!"*
+- Add and commit your changes
+- Push the project as a public repository to github
+
+Task 3 (advanced, only if the previous 2 was easy)
+========================================================
+
+- Create a new branch called *test*
+- Modify *"Hello World!"* to *"Bye World!"*
+- Add and commit, push
+- Check out the master branch
+- Modify *"Hello World!"* to *"Olleh World!"*
+- Add and commit, push
+- Merge test branch to master, resolve conflitcs as you seem fit. You can do this on your computer or on github as well.
+
+Task 4 (advanced, only if the previous 3 finished)
+========================================================
+
+- Set up SSH key authentication
+- Info [here](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) but first try to google
+- If you made it so far, you can download the github desktop app and forget about the terminal utnil you will need it in any remote working setup.
