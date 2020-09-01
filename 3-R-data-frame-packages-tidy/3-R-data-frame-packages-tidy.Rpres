@@ -163,7 +163,7 @@ Packages - installing
 ========================================================
 
 - from CRAN ```install.packages('devtools')```
-- from gitHub ```devtools::install_github(hadley/tidyr)``` (after installing devtools)
+- from gitHub ```devtools::install_github("hadley/tidyr")``` (after installing devtools)
 
 Packages - installing
 ========================================================
