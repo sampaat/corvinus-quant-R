@@ -202,7 +202,7 @@ greetMe("Mate")
 ```
 
 ```
-[1] "Hi Mate! Nice to meet you! It's Thursday"
+[1] "Hi Mate! Nice to meet you! It's Tuesday"
 ```
 
 ```r
