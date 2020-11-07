@@ -35,7 +35,7 @@ Figuring out the dataset, make it tidy
 
 ```{r}
 library(magrittr)
-readr::read_csv("http://api.bitcoincharts.com/v1/csv/anxhkUSD.csv.gz", col_names = c("date", "volume", "price")) %>%
+readr::read_csv("http://api.bitcoincharts.com/v1/csv/anxhkUSD.csv.gz", col_names = c("date", "price", "volume")) %>%
   dplyr::mutate(date = as.POSIXct(date, origin="1970-01-01"))
 ```
 And so on...
